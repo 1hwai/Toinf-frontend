@@ -1,11 +1,12 @@
 import ScreenManager from "@/app/models/ScreenManager";
 import Graph from "@/app/models/graph/graph";
-import Point2d from "@/app/models/point2d";
+import Vector2d from "@/app/models/vector2d";
 import {Exception} from "sass";
 
 export default class FunctionHandler {
-    private id: string;
+    private readonly id: string;
     public f: Function;
+    public visibility: boolean = true;
 
     constructor(id: string, func: Function) {
         this.id = id;
@@ -15,20 +16,25 @@ export default class FunctionHandler {
     /**
      * @description calcFor() : this method is only for y=f(x) shape of function. 1 param, explicit function.
      * */
-    public calcFor(x0: number, x1: number): Array<Point2d> {
+    public calcFor(x0: number, x1: number): Array<Vector2d> {
         //this should never happen.
-        if (x0 > x1) return [new Point2d(0, 0)];
+        if (x0 > x1) return [new Vector2d(0, 0)];
+
         const domain: Array<number> = [x0, x1];
-        const points: Array<Point2d> = new Array<Point2d>();
+        const range: Array<Vector2d> = new Array<Vector2d>();
 
         const dx: number = (x1 - x0) / Graph.ACCURACY;
     
         // @ts-ignore
         for (let x: number = domain.at(0); x < domain.at(1); x+=dx) {
-            points.push(new Point2d(x, this.f(x)));
+            range.push(new Vector2d(x, this.f(x)));
         }
 
-        return points;
+        return range;
+    }
+
+    public get getId(): string {
+        return this.id;
     }
 
 }

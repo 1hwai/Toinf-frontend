@@ -1,10 +1,11 @@
 import Graph from "./graph/graph";
 import GraphManager from "./graph/graphManager";
 import GraphPrinter from "./graphPrinter";
-import Point2d from "./point2d";
+import Vector2d from "./vector2d";
 import Dot2d from "@/app/models/dot";
 import {Colors} from "@/app/models/colors";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import FourierTransform from "@/app/models/animations/fourierTransform";
 
 export default class ScreenManager implements GraphPrinter {
 
@@ -13,8 +14,8 @@ export default class ScreenManager implements GraphPrinter {
     private readonly ctx: CanvasRenderingContext2D;
     private readonly graph: Graph = GraphManager.getMain;
 
-    private idealCenter: Point2d = new Point2d(0, 0);
-    private realCenter: Point2d;
+    private idealCenter: Vector2d = new Vector2d(0, 0);
+    private realCenter: Vector2d;
     private ratio: number;
     //G2S abs(1) in Graph = abs(initialWidth / 10);
     //<=> abs(10) in Graph = abs(initialWidth);
@@ -26,12 +27,15 @@ export default class ScreenManager implements GraphPrinter {
         this.canvas.height = window.innerHeight * 0.9;
         this.ctx.strokeStyle = '#84ff89';
         this.ctx.lineWidth = 1;
-        this.realCenter = new Point2d(this.canvas.width / 2, this.canvas.height / 2);
+        this.realCenter = new Vector2d(this.canvas.width / 2, this.canvas.height / 2);
         this.ratio = this.canvas.width / 10;
 
-        this.graph.getFM.addFunction((x) => {
-            return Math.asin(x);
+        const signalId: string = this.graph.getFM.addFunction((x) => {
+            return 4 * Math.sin(2*Math.PI*2*x) + 2 * Math.cos(2*Math.PI*3*x);
+            // return Math.sin(x);
         });
+        this.graph.getFM.setFunctionVisibility(signalId, false);
+        new FourierTransform(this.graph.getFM.getFunction(signalId))
         this.initListeners();
 
         this.print();
@@ -67,13 +71,13 @@ export default class ScreenManager implements GraphPrinter {
     public onResize(canvas: HTMLCanvasElement): void {
         canvas.width = window.innerWidth * 0.8;
         canvas.height = window.innerHeight * 0.8;
-        this.realCenter = new Point2d(canvas.width / 2, canvas.height / 2);
+        this.realCenter = new Vector2d(canvas.width / 2, canvas.height / 2);
         this.ctx.strokeStyle = '#84ff89'
         this.print();
     }
 
     public move(deltaX: number, deltaY: number): void {
-        this.idealCenter = new Point2d(
+        this.idealCenter = new Vector2d(
             this.idealCenter.getX + deltaX,
             this.idealCenter.getY - deltaY
         );
@@ -91,28 +95,30 @@ export default class ScreenManager implements GraphPrinter {
     }
 
     public drawXYAxis(): void {
-        const leftUp: Point2d = this.convertPosS2G(new Point2d(0, 0));
-        const rightDown: Point2d = this.convertPosS2G(new Point2d(this.canvas.width, this.canvas.height));
+        const leftUp: Vector2d = this.convertPosS2G(new Vector2d(0, 0));
+        const rightDown: Vector2d = this.convertPosS2G(new Vector2d(this.canvas.width, this.canvas.height));
         this.drawStrokeAt(leftUp.getX, 0, rightDown.getX, 0);
         this.drawStrokeAt(0, leftUp.getY, 0, rightDown.getY);
     }
 
     public drawFunctions(): void {
-        const leftUp: Point2d = this.convertPosS2G(new Point2d(0, 0));
-        const rightDown: Point2d = this.convertPosS2G(new Point2d(this.canvas.width, this.canvas.height));
+        const leftUp: Vector2d = this.convertPosS2G(new Vector2d(0, 0));
+        const rightDown: Vector2d = this.convertPosS2G(new Vector2d(this.canvas.width, this.canvas.height));
 
         for (let f of this.graph.getFM.getFunctions()) {
-            const result: Array<Point2d> = f.calcFor(leftUp.getX, rightDown.getX);
-            for (let i = 0; i < result.length; i++) {
-                if (i > 0) {
-                    const p: Point2d = result[i];
-                    const preP: Point2d = result[i - 1];
-                    this.drawStrokeAt(p.getX, p.getY, preP.getX, preP.getY);
-                    //drawDot
-                    if (p.getY * preP.getY < 0) {
-                        const meanX: number = (p.getX + preP.getX) / 2;
-                        const root: Dot2d = new Dot2d(Colors.BLUE, meanX, 0);
-                        this.drawDot(root);
+            if (f.visibility) {
+                const result: Array<Vector2d> = f.calcFor(leftUp.getX, rightDown.getX);
+                for (let i = 0; i < result.length; i++) {
+                    if (i > 0) {
+                        const p: Vector2d = result[i];
+                        const preP: Vector2d = result[i - 1];
+                        this.drawStrokeAt(p.getX, p.getY, preP.getX, preP.getY);
+                        //drawDot
+                        if (p.getY * preP.getY < 0) {
+                            const meanX: number = (p.getX + preP.getX) / 2;
+                            const root: Dot2d = new Dot2d(Colors.BLUE, meanX, 0);
+                            this.drawDot(root);
+                        }
                     }
                 }
             }
@@ -125,8 +131,8 @@ export default class ScreenManager implements GraphPrinter {
 
     //Should be an Ideal Point.
     public drawStrokeAt(x1: number, y1: number, x2: number, y2: number): void {
-        const _p1: Point2d = this.convertPosG2S(new Point2d(x1, y1));
-        const _p2: Point2d = this.convertPosG2S(new Point2d(x2, y2));
+        const _p1: Vector2d = this.convertPosG2S(new Vector2d(x1, y1));
+        const _p2: Vector2d = this.convertPosG2S(new Vector2d(x2, y2));
         this.ctx.beginPath();
         this.ctx.moveTo(_p1.getX, _p1.getY);
         this.ctx.lineTo(_p2.getX, _p2.getY);
@@ -135,21 +141,21 @@ export default class ScreenManager implements GraphPrinter {
 
     public drawDot(dot: Dot2d): void {
         this.ctx.fillStyle = dot.getColor;
-        const p: Point2d = this.convertPosG2S(new Point2d(dot.getX, dot.getY));
+        const p: Vector2d = this.convertPosG2S(new Vector2d(dot.getX, dot.getY));
         this.ctx.fillRect(p.getX - 2, p.getY - 2, 4, 4);
         this.ctx.fillStyle = "#ffffff";
         this.ctx.fillText(`${dot.getX.toString().slice(0, 5)}`, p.getX, p.getY + 4);
     }
 
-    public convertPosG2S(point: Point2d): Point2d {
-        return new Point2d(
+    public convertPosG2S(point: Vector2d): Vector2d {
+        return new Vector2d(
             (this.idealCenter.getX + point.getX) * this.ratio + this.realCenter.getX,
             this.canvas.height - (this.idealCenter.getY + point.getY) * this.ratio - this.realCenter.getY
         );
     }
 
-    public convertPosS2G(point: Point2d): Point2d {
-        return new Point2d(
+    public convertPosS2G(point: Vector2d): Vector2d {
+        return new Vector2d(
             (-this.realCenter.getX + point.getX) / this.ratio - this.idealCenter.getX,
             (this.canvas.height - point.getY - this.realCenter.getY) / this.ratio - this.idealCenter.getY
         );

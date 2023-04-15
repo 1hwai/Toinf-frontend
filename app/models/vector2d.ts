@@ -1,4 +1,4 @@
-export default class Point2d {
+export default class Vector2d {
     private readonly x: number;
     private readonly y: number;
 

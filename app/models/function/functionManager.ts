@@ -11,14 +11,12 @@ export default class FunctionManager {
     constructor() {
     }
 
-    public addFunction(f: Function): FunctionState {
+    public addFunction(f: Function): string {
         const id: string = uuid();
         const fHandler: FunctionHandler = new FunctionHandler(id, f);
         if (this.isFunctionValid(fHandler)) {
-            this.functions.set(uuid(), fHandler);
-            return FunctionState.SUCCESS;
-        } else {
-            return FunctionState.FAIL;
+            this.functions.set(id, fHandler);
+            return id;
         }
     }
 
@@ -32,6 +30,10 @@ export default class FunctionManager {
 
     public getFunctions(): Array<FunctionHandler> {
         return Array.from(this.functions.values());
+    }
+
+    public setFunctionVisibility(id: string, visible: boolean): void {
+        this.getFunction(id)!.visibility = visible;
     }
 
     private isFunctionValid(fHandler: FunctionHandler): boolean {

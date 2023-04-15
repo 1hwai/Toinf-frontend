@@ -1,7 +1,7 @@
-import Point2d from "@/app/models/point2d";
+import Vector2d from "@/app/models/vector2d";
 import {Colors} from "@/app/models/colors";
 
-export default class Dot2d extends Point2d {
+export default class Dot2d extends Vector2d {
     private readonly color: Colors;
 
     constructor(color: Colors, x: number, y: number) {

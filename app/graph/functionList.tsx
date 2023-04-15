@@ -13,9 +13,9 @@ export default function FunctionList() {
 
     return (
         <div>
-            { list.map((v,i) => {
-                return v;
-            }) }
+            {/*{ list.map((v,i) => {*/}
+            {/*    return (v);*/}
+            {/*}) }*/}
             <button>+</button>
         </div>
     )
