@@ -4,15 +4,25 @@ import {number} from "prop-types";
 
 
 export default class Graph {
+    private static INSTANCE: Graph = new Graph();
+
     private readonly functionManager: FunctionManager = new FunctionManager();
 
-    public static readonly ACCURACY = Math.pow(10, 3);
+    private readonly ACCURACY = Math.pow(10, 3);
 
     constructor() {
     }
 
+    public static get get(): Graph {
+        return this.INSTANCE;
+    }
+
     public get getFM(): FunctionManager {
         return this.functionManager;
+    }
+
+    public get getAccuracy(): number {
+        return this.ACCURACY;
     }
 
 }

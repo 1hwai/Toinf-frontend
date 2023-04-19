@@ -1,5 +1,5 @@
-import ScreenManager from "@/app/models/ScreenManager";
-import Graph from "@/app/models/graph/graph";
+import ScreenManager from "@/app/models/screenManager";
+import Graph from "@/app/models/graph";
 import Vector2d from "@/app/models/vector2d";
 import {Exception} from "sass";
 
@@ -23,7 +23,7 @@ export default class FunctionHandler {
         const domain: Array<number> = [x0, x1];
         const range: Array<Vector2d> = new Array<Vector2d>();
 
-        const dx: number = (x1 - x0) / Graph.ACCURACY;
+        const dx: number = (x1 - x0) / Graph.get.getAccuracy;
     
         // @ts-ignore
         for (let x: number = domain.at(0); x < domain.at(1); x+=dx) {

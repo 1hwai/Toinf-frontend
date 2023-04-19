@@ -1,5 +1,4 @@
-import Graph from "./graph/graph";
-import GraphManager from "./graph/graphManager";
+import Graph from "./graph";
 import GraphPrinter from "./graphPrinter";
 import Vector2d from "./vector2d";
 import Dot2d from "@/app/models/dot";
@@ -12,7 +11,7 @@ export default class ScreenManager implements GraphPrinter {
     private readonly canvas: HTMLCanvasElement;
     private isMouseDown: boolean = false;
     private readonly ctx: CanvasRenderingContext2D;
-    private readonly graph: Graph = GraphManager.getMain;
+    private readonly graph: Graph = Graph.get;
 
     private idealCenter: Vector2d = new Vector2d(0, 0);
     private realCenter: Vector2d;
