@@ -17,6 +17,8 @@ export default class FunctionManager {
         if (this.isFunctionValid(fHandler)) {
             this.functions.set(id, fHandler);
             return id;
+        } else {
+            return "Invalid Function";
         }
     }
 
