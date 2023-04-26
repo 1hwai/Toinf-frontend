@@ -8,8 +8,6 @@ import Function from "@/app/graph/function";
 export default function FunctionList() {
 
     const [list, setList] = useState<Array<JSX.Element>>([
-        <Function/>,
-        <Function/>,
         <Function/>
     ]);
 

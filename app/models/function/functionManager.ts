@@ -16,6 +16,7 @@ export default class FunctionManager {
         const fHandler: FunctionHandler = new FunctionHandler(id, f);
         if (this.isFunctionValid(fHandler)) {
             this.functions.set(id, fHandler);
+            this.setFunctionVisibility(id, true);
             return id;
         } else {
             return "Invalid Function";

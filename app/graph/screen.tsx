@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import ScreenManager from "../models/ScreenManager";
+import ScreenManager from "../models/screenManager";
 
-import styles from "../styles/graph.module.scss";
+import styles from "../styles/screen.module.scss";
 
 export default function Screen() {
 

@@ -5,14 +5,15 @@ import { MathfieldComponent } from "react-mathlive";
 
 export default function Function() {
     return (
-        <div>
+        <div className={styles.functionHandler}>
             <div className={styles.mathField}>
-                {/*<math-field virtual-keyboard-mode="auto"></math-field>*/}
-                <MathfieldComponent
-                    initialLatex="x"
-                />
+                <math-field virtual-keyboard-mode="auto">2222</math-field>
+                {/*<MathfieldComponent*/}
+                {/*    initialLatex="x"*/}
+                {/*    mathfieldConfig={}*/}
+                {/*/>*/}
             </div>
-            <button type={"submit"}>Run</button>
+            <button className={styles.runBtn} type={"submit"}>Run</button>
         </div>
     );
 }

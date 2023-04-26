@@ -1,17 +1,21 @@
-.mathField {
+.functionHandler {
   width: 80vw;
   height: 30px;
-  border-radius: 5px;
-  border: 1px solid white;
-  background-color: #4b4b4b;
-  color: bisque;
-}
+  display: flex;
 
-#math-field {
-  font-size: 32px;
-  margin: 3em;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, .3);
-  box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+  .mathField {
+    width: 80vw;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: black;
+  }
+
+  .runBtn {
+    width: 100px;
+    height: 30px;
+    background-color: mediumspringgreen;
+    border: 0px;
+    border-radius: 10px;
+  }
 }

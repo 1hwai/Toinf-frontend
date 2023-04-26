@@ -4,7 +4,6 @@ import Vector2d from "./vector2d";
 import Dot2d from "@/app/models/dot";
 import {Colors} from "@/app/models/colors";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import FourierTransform from "@/app/models/animations/fourierTransform";
 
 export default class ScreenManager implements GraphPrinter {
 
@@ -29,12 +28,9 @@ export default class ScreenManager implements GraphPrinter {
         this.realCenter = new Vector2d(this.canvas.width / 2, this.canvas.height / 2);
         this.ratio = this.canvas.width / 10;
 
-        const signalId: string = this.graph.getFM.addFunction((x) => {
-            return 4 * Math.sin(2*Math.PI*2*x) + 2 * Math.cos(2*Math.PI*3*x);
-            // return Math.sin(x);
+        this.graph.getFM.addFunction((x) => {
+            return Math.abs(Math.sin(x));
         });
-        this.graph.getFM.setFunctionVisibility(signalId, false);
-        new FourierTransform(this.graph.getFM.getFunction(signalId))
         this.initListeners();
 
         this.print();
@@ -55,6 +51,7 @@ export default class ScreenManager implements GraphPrinter {
                 this.move(ev.movementX / this.ratio, ev.movementY / this.ratio);
         })
         this.canvas.addEventListener('wheel', ev => {
+            ev.preventDefault();
             this.clear();
             if (ev.deltaY < 0) {
                 this.ratio -= ev.deltaY/50;
@@ -113,7 +110,7 @@ export default class ScreenManager implements GraphPrinter {
                         const preP: Vector2d = result[i - 1];
                         this.drawStrokeAt(p.getX, p.getY, preP.getX, preP.getY);
                         //drawDot
-                        if (p.getY * preP.getY < 0) {
+                        if (p.getY * preP.getY <= 0) {
                             const meanX: number = (p.getX + preP.getX) / 2;
                             const root: Dot2d = new Dot2d(Colors.BLUE, meanX, 0);
                             this.drawDot(root);
