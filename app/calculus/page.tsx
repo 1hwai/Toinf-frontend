@@ -5,7 +5,7 @@ import styles from "../styles/mathfield.module.scss";
 import dynamic from "next/dynamic";
 import {MathfieldComponent} from "react-mathlive";
 
-const Mathfield = dynamic(() => import("@/app/utils/mathlive/Mathfield"), {
+const MathField = dynamic(() => import("@/app/utils/mathlive/MathField"), {
     ssr: false
 })
 
@@ -15,7 +15,7 @@ export default function Calculus() {
     }
     return (
         <div>
-            <Mathfield  />
+            <MathField id={1} className={styles.mathfield} value={""} onChange={() => {}}/>
             <button onClick={onIntegralClick}>click</button>
         </div>
     );

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import ScreenManager from "../models/screenManager";
 
+// import styles from "../styles/screen.module.scss";
 import styles from "../styles/screen.module.scss";
 
 export default function Screen() {

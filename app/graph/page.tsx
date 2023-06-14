@@ -7,7 +7,7 @@ import styles from "@/app/styles/page.module.scss";
 export default function Graph() {
     return (
         <div className={styles.main}>
-            <div>Cal page</div>
+            <div>Graph page</div>
 
             <Screen></Screen>
             <FunctionList></FunctionList>
