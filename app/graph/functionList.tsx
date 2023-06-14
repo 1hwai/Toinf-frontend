@@ -56,7 +56,7 @@ export default function FunctionList() {
     const handleDeleteTodo = (id: number) => {
         const updatedTodos = list.filter((f) => f.props.id !== id);
         setList(updatedTodos);
-    };
+    }
 
     return (
         <div>
