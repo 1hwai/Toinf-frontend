@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #mf {
+            width: 800px;
+            font-size: 32px;
+            margin: 3em;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, .3);
+            box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+            --caret-color: red;
+            --selection-background-color: lightgoldenrodyellow;
+            --selection-color: darkblue;
+        }
+    </style>
 </head>
 <body>
- <math-field></math-field>
+ <math-field id="mf"></math-field>
  <script defer src="https://unpkg.com/mathlive"></script>
 </body>
 </html>

@@ -1,21 +1,35 @@
-.functionHandler {
-  width: 80vw;
-  height: 30px;
+.functionList {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80vw;
+  min-height: 100px;
+  border-radius: 10px;
 
-  .mathField {
-    width: 80vw;
-    height: 30px;
-    border-radius: 5px;
-    border: 1px solid black;
-    color: black;
+  .addBtn {
+    border: 0;
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #066f8a;
+    color: #ffffff;
+    font-size: 1.4em;
   }
 
-  .runBtn {
-    width: 100px;
-    height: 30px;
-    background-color: mediumspringgreen;
-    border: 0px;
-    border-radius: 10px;
+  .functionHandler {
+    display: flex;
+    flex-direction: row;
+    padding-left: 40px;
+
+    .delBtn {
+      margin-top: 30px;
+      border: 0;
+      border-radius: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: #b05757;
+      color: #ffffff;
+      font-size: 1.4em;
+    }
   }
 }

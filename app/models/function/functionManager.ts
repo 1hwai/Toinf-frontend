@@ -19,7 +19,7 @@ export default class FunctionManager {
             this.setFunctionVisibility(id, true);
             return id;
         } else {
-            return "Invalid Function";
+            return "Invalid FunctionHandler";
         }
     }
 
