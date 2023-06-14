@@ -47,7 +47,8 @@ export default function FunctionList() {
 
     const handleAddTodo = () => {
         if (inputValue.trim() !== '') {
-            setList([...list, <MathField id={Date.now()} value={""} onChange={handleInputChange} key={null}/>]);
+            console.log('input: ' + inputValue)
+            setList([...list, <MathField id={Date.now()} value={inputValue} onChange={handleInputChange} key={null}/>]);
             setInputValue('');
         }
     };
@@ -83,8 +84,9 @@ export default function FunctionList() {
                 <button onClick={handleAddTodo}>Add</button>
                 <ul>
                     {list.map((f:JSX.Element) => (
+
                         <li key={f.props.id}>
-                            {f.props.text}
+                            <MathField id={f.props.id} value={f.props.value} onChange={handleInputChange}></MathField>
                             <button onClick={() => handleDeleteTodo(f.props.id)}>Delete</button>
                         </li>
                     ))}
