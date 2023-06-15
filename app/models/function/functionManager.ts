@@ -11,10 +11,9 @@ export default class FunctionManager {
     constructor() {
     }
 
-    public addFunction(f: Function): string {
-        const id: string = uuid();
+    public addFunction(id: string, f: Function): string {
         const fHandler: FunctionHandler = new FunctionHandler(id, f);
-        if (this.isFunctionValid(fHandler)) {
+        if (this.isFunctionValid(id, fHandler)) {
             this.functions.set(id, fHandler);
             this.setFunctionVisibility(id, true);
             return id;
@@ -39,8 +38,8 @@ export default class FunctionManager {
         this.getFunction(id)!.visibility = visible;
     }
 
-    private isFunctionValid(fHandler: FunctionHandler): boolean {
-        return fHandler !== null
+    private isFunctionValid(id: string, fHandler: FunctionHandler): boolean {
+        return this.functions.has(id) && fHandler !== null;
     }
 
 }

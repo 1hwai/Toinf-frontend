@@ -27,14 +27,14 @@ export default function FunctionList() {
         setInputValue(latex);
     };
 
-    const handleAddTodo = () => {
+    const handleAddFunction = () => {
         if (inputValue.trim() !== '') {
             setList([...list, <MathField id={Date.now().toString()} value={inputValue} onChange={handleInputChange} key={null}/>]);
             setInputValue('');
         }
     };
 
-    const handleDeleteTodo = (id: number) => {
+    const handleDeleteFunction = (id: number) => {
         const updatedTodos = list.filter((f) => f.props.id !== id);
         setList(updatedTodos);
     }
@@ -47,12 +47,13 @@ export default function FunctionList() {
                 onChange={handleInputChange}
                 ref={mainRef}
             />
-            <button className={styles.addBtn} onClick={handleAddTodo}>+</button>
+            <button className={styles.addBtn} onClick={handleAddFunction}>+</button>
             <ul>
                 {list.map((f:JSX.Element) => (
                     <li className={styles.functionHandler} key={f.props.id}>
                         {f}
-                        <button onClick={() => handleDeleteTodo(f.props.id)} className={styles.delBtn}>-</button>
+                        <button className={styles.runBtn}>*</button>
+                        <button onClick={() => handleDeleteFunction(f.props.id)} className={styles.delBtn}>-</button>
                     </li>
                 ))}
             </ul>
