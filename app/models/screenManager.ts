@@ -22,14 +22,14 @@ export default class ScreenManager implements GraphPrinter {
         this.canvas = canvas!;
         this.ctx = canvas!.getContext('2d')!;
         this.canvas.width = window.innerWidth - 400;
-        this.canvas.height = window.innerHeight * 0.9;
+        this.canvas.height = window.innerHeight * 0.6;
         this.ctx.strokeStyle = '#84ff89';
         this.ctx.lineWidth = 1;
         this.realCenter = new Vector2d(this.canvas.width / 2, this.canvas.height / 2);
         this.ratio = this.canvas.width / 10;
 
         this.graph.getFM.addFunction("sdd", (x) => {
-            return Math.abs(Math.sin(x));
+            return Math.exp(-Math.pow(x,2));
         });
         this.initListeners();
 

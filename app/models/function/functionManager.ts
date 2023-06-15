@@ -13,11 +13,12 @@ export default class FunctionManager {
 
     public addFunction(id: string, f: Function): string {
         const fHandler: FunctionHandler = new FunctionHandler(id, f);
-        if (this.isFunctionValid(id, fHandler)) {
+        if (this.isFunctionValid(id)) {
             this.functions.set(id, fHandler);
             this.setFunctionVisibility(id, true);
             return id;
         } else {
+            console.log('Invalid FunctionHandler: FunctionManager already has its function id')
             return "Invalid FunctionHandler";
         }
     }
@@ -38,8 +39,8 @@ export default class FunctionManager {
         this.getFunction(id)!.visibility = visible;
     }
 
-    private isFunctionValid(id: string, fHandler: FunctionHandler): boolean {
-        return this.functions.has(id) && fHandler !== null;
+    private isFunctionValid(id: string): boolean {
+        return !this.functions.has(id);
     }
 
 }

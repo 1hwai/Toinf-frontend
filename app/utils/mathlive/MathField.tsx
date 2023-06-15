@@ -9,8 +9,8 @@ export type MathFieldProps = {
     className?: string;
 };
 
-const MathField = forwardRef<MathfieldElement, MathFieldProps>((props: MathFieldProps, ref) => {
-    const mathFieldRef = useRef<MathfieldElement>(null);
+export default function MathField(props: MathFieldProps) {
+    const ref = useRef<MathfieldElement>();
 
     const mathFieldStyle = {
         margin: "32px",
@@ -26,7 +26,7 @@ const MathField = forwardRef<MathfieldElement, MathFieldProps>((props: MathField
     }
 
     useEffect(() => {
-        const mathField: MathfieldElement | null = mathFieldRef.current;
+        const mathField: MathfieldElement | null = ref.current!;
         if (mathField) {
             mathField.addEventListener("input", handleInputChange);
         }
@@ -39,7 +39,7 @@ const MathField = forwardRef<MathfieldElement, MathFieldProps>((props: MathField
     }, []);
 
     const handleInputChange = () => {
-        const mathField: MathfieldElement | null = mathFieldRef.current;
+        const mathField: MathfieldElement | null = ref.current!;
         if (mathField) {
             const value: string = mathField.getValue();
             props.onChange(value);
@@ -47,15 +47,9 @@ const MathField = forwardRef<MathfieldElement, MathFieldProps>((props: MathField
         }
     };
 
-    useImperativeHandle(ref, () => mathFieldRef.current!);
-
     return (
         <div>
-            <math-field style={mathFieldStyle} ref={mathFieldRef}>{props.value}</math-field>
+            <math-field style={mathFieldStyle} ref={ref}>{props.value}</math-field>
         </div>
     );
-});
-
-MathField.displayName = "MathField";
-
-export default MathField;
+}

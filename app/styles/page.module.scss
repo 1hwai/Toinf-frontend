@@ -6,6 +6,9 @@
   padding: 4rem;
   min-height: 100vh;
   background-color: white;
+  color: black;
+  font-family: 'Consolas', serif;
+  font-size: 1.4em;
 }
 
 .description {
@@ -53,6 +56,7 @@
   background: rgba(var(--card-rgb), 0);
   border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
+  text-align: center;
 }
 
 .card span {

@@ -13,21 +13,11 @@ const MathField = dynamic(() => import("@/app/utils/mathlive/MathField"), {
 
 export default function FunctionList() {
     const [list, setList] = useState<JSX.Element[]>([]);
-    const [inputValue, setInputValue] = useState<string>('');
-
-    const customSetInputValue = (latex: string) => {
-        setInputValue(latex);
-
-    }
-
-    const handleInputChange = (latex: string) => {
-        console.log(latex);
-        setInputValue(latex);
-    };
 
     const handleAddFunction = () => {
         if (inputValue.trim() !== '') {
-            setList([...list, <MathField id={Date.now().toString()} value={inputValue} onChange={handleInputChange} key={null}/>]);
+            // setList([...list, <MathField id={Date.now().toString()} value={inputValue} onChange={handleInputChange} key={null}/>]);
+            setList([...list, <input id={Date.now().toString()} value={inputValue} onChange={handleInputChange}/>])
             setInputValue('');
         }
     };
