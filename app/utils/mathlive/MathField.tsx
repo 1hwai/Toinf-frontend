@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef} from "react";
 import { MathfieldElement, MathfieldOptions } from "mathlive";
 
 export type MathFieldProps = {
@@ -9,8 +9,8 @@ export type MathFieldProps = {
     className?: string;
 };
 
-export default function MathField(props: MathFieldProps) {
-    const ref = useRef<MathfieldElement>();
+const MathField = forwardRef<MathfieldElement, MathFieldProps>((props: MathFieldProps, ref) => {
+    const mathFieldRef = useRef<MathfieldElement>(null);
 
     const mathFieldStyle = {
         margin: "32px",
@@ -26,7 +26,7 @@ export default function MathField(props: MathFieldProps) {
     }
 
     useEffect(() => {
-        const mathField: MathfieldElement = ref.current!;
+        const mathField: MathfieldElement | null = mathFieldRef.current;
         if (mathField) {
             mathField.addEventListener("input", handleInputChange);
         }
@@ -39,16 +39,23 @@ export default function MathField(props: MathFieldProps) {
     }, []);
 
     const handleInputChange = () => {
-        const mathField: MathfieldElement = ref.current!;
+        const mathField: MathfieldElement | null = mathFieldRef.current;
         if (mathField) {
             const value: string = mathField.getValue();
             props.onChange(value);
+            mathField.setValue(value);
         }
     };
 
+    useImperativeHandle(ref, () => mathFieldRef.current!);
+
     return (
         <div>
-            <math-field style={mathFieldStyle} ref={ref}></math-field>
+            <math-field style={mathFieldStyle} ref={mathFieldRef}>{props.value}</math-field>
         </div>
     );
-}
+});
+
+MathField.displayName = "MathField";
+
+export default MathField;

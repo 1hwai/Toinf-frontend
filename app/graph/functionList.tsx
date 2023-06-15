@@ -15,7 +15,7 @@ export default function FunctionList() {
     const [list, setList] = useState<JSX.Element[]>([]);
     const [inputValue, setInputValue] = useState<string>('');
 
-    const mainRef = useRef<MathfieldElement>();
+    const mainRef = useRef<MathfieldElement | null>(null);
 
     const customSetInputValue = (latex: string) => {
         setInputValue(latex);
@@ -31,7 +31,6 @@ export default function FunctionList() {
         if (inputValue.trim() !== '') {
             setList([...list, <MathField id={Date.now().toString()} value={inputValue} onChange={handleInputChange} key={null}/>]);
             setInputValue('');
-            mainRef.current!.setValue('');
         }
     };
 
@@ -52,7 +51,7 @@ export default function FunctionList() {
             <ul>
                 {list.map((f:JSX.Element) => (
                     <li className={styles.functionHandler} key={f.props.id}>
-                        <MathField id={f.props.id} value={f.props.value} onChange={handleInputChange}></MathField>
+                        {f}
                         <button onClick={() => handleDeleteTodo(f.props.id)} className={styles.delBtn}>-</button>
                     </li>
                 ))}
