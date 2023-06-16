@@ -1,22 +1,30 @@
 "use client";
 
-import integral from "@/app/api/backend/integral";
-import styles from "../styles/mathfield.module.scss";
 import dynamic from "next/dynamic";
 import {MathfieldComponent} from "react-mathlive";
+import {useState} from "react";
+import Link from "next/link";
+import Screen from "@/app/graph/screen";
+import FunctionList from "@/app/calculus/functionList";
+
+import styles from "@/app/styles/page.module.scss";
 
 const MathField = dynamic(() => import("@/app/utils/mathlive/MathField"), {
     ssr: false
 })
 
 export default function Calculus() {
-    const onIntegralClick = (e: any) => {
-       console.log(integral("sdfsf"));
-    }
     return (
-        <div>
-            <MathField id={1} className={styles.mathfield} value={""} onChange={() => {}}/>
-            <button onClick={onIntegralClick}>click</button>
+        <div className={styles.main}>
+            <Link href={'/'} className={styles.card}>
+                back
+            </Link>
+            <Link href={'/graph2'} target={'_blank'} className={styles.card}>
+                move to Graph2 page
+            </Link>
+            <h2>Calculus page</h2>
+
+            <FunctionList></FunctionList>
         </div>
     );
 }

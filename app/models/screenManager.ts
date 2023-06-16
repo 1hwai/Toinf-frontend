@@ -27,11 +27,9 @@ export default class ScreenManager implements GraphPrinter {
         this.ctx.lineWidth = 1;
         this.realCenter = new Vector2d(this.canvas.width / 2, this.canvas.height / 2);
         this.ratio = this.canvas.width / 10;
-
-        this.graph.getFM.addFunction("sdd", (x) => {
-            return Math.exp(-Math.pow(x,2));
-        });
         this.initListeners();
+
+        this.graph.getFM.initFunctions();
 
         this.print();
     }

@@ -24,10 +24,14 @@ export default class FunctionHandler {
         const range: Array<Vector2d> = new Array<Vector2d>();
 
         const dx: number = (x1 - x0) / Graph.get.getAccuracy;
-    
-        // @ts-ignore
-        for (let x: number = domain.at(0); x < domain.at(1); x+=dx) {
-            range.push(new Vector2d(x, this.f(x)));
+
+        try {
+            // @ts-ignore
+            for (let x: number = domain.at(0); x < domain.at(1); x+=dx) {
+                range.push(new Vector2d(x, this.f(x)));
+            }
+        } catch (e) {
+            console.log(e);
         }
 
         return range;

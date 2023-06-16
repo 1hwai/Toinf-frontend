@@ -3,22 +3,19 @@
 import React, {FormEvent, MouseEventHandler, useEffect, useRef, useState} from "react"
 
 import dynamic from "next/dynamic";
-import {MathfieldElement} from "mathlive";
-import {inspect} from "util";
 import styles from "../styles/functionList.module.scss";
-import FunctionManager from "@/app/models/function/functionManager";
 
-const MathField = dynamic(() => import("@/app/utils/mathlive/MathField"), {
+const CalculusField = dynamic(() => import("@/app/utils/mathlive/CalculusField"), {
     ssr: false
 })
 
 export default function FunctionList() {
     const [list, setList] = useState<JSX.Element[]>([
-        <MathField id={Date.now().toString()}/>
+        <CalculusField id={Date.now().toString()}/>
     ]);
 
     const handleAddFunction = () => {
-        setList([...list, <MathField id={Date.now().toString()}/>]);
+        setList([...list, <CalculusField id={Date.now().toString()}/>]);
     };
 
     const handleDeleteFunction = (id: number) => {

@@ -13,8 +13,9 @@ export default class FunctionManager {
 
     public addFunction(id: string, f: Function): string {
         const fHandler: FunctionHandler = new FunctionHandler(id, f);
-        if (this.isFunctionValid(id)) {
+        if (this.isFunctionValid(id, f)) {
             this.functions.set(id, fHandler);
+            console.log('fm.addFunction successful: ' + id + ' f: ' + fHandler.f);
             this.setFunctionVisibility(id, true);
             return id;
         } else {
@@ -35,12 +36,17 @@ export default class FunctionManager {
         return Array.from(this.functions.values());
     }
 
+    public initFunctions(): void {
+        this.functions.clear();
+    }
+
     public setFunctionVisibility(id: string, visible: boolean): void {
         this.getFunction(id)!.visibility = visible;
     }
 
-    private isFunctionValid(id: string): boolean {
-        return !this.functions.has(id);
+    private isFunctionValid(id: string, f: Function): boolean {
+        return (!this.functions.has(id))
+            || (this.functions.has(id) && this.functions.get(id).f !== f)
     }
 
 }
