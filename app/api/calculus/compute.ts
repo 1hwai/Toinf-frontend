@@ -1,21 +1,22 @@
 import axios from "axios";
 
-export default async function compute(menu: string, variable: string, latex: string) {
-    // const result =
-    //     await axios.post(
-    //         "http://localhost:8000/parse",
-    //         {
-    //             'content': latex,
-    //         }
-    //     );
-    const result =
+type resultType = {
+    data: { result: { latex: string, menu: string, variable: string }}
+}
+
+export default async function compute(menu: string, variable: string, latex: string): Promise<string> {
+    const result: resultType =
         await axios.post(
             "http://localhost:8000/derivative",
             {
                 'menu': menu,
                 'variable': variable,
-                'latex': '$$ \\sin\\left(x\\right) $$',
+                'latex': '$$ e^{x} $$',
             }
         );
-    console.log(result.data);
+    return result.data.result.latex;
+    /**
+     * $$ e^{x} $$
+     *
+     */
 }

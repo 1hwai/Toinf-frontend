@@ -20,7 +20,7 @@ export default function Calculus() {
                 back
             </Link>
             <Link href={'/graph2'} target={'_blank'} className={styles.card}>
-                move to Graph2 page
+                open Graph2 page in a new tab
             </Link>
             <h2>Calculus page</h2>
 

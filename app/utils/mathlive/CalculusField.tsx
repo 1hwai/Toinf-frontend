@@ -18,10 +18,12 @@ export enum Menu {
 
 export default function CalculusField(props: CalculusFieldProps) {
     const ref = useRef<MathfieldElement>();
+    const resultRef = useRef<MathfieldElement>();
+
     const [mathFieldValue, setMathFieldValue] = useState<string>('');
     const [menu, setMenu] = useState<string>(Menu.DERIVATIVE);
     const [variable, setVariable] = useState<string>('');
-
+    const [result, setResult] = useState<string>('');
 
     const mathFieldStyle = {
         margin: "32px",
@@ -51,6 +53,14 @@ export default function CalculusField(props: CalculusFieldProps) {
         setMenu(e.target.value);
     }
 
+    const showResult = async () => {
+        const res: string = await compute(menu, variable, mathFieldValue);
+        console.log(res);
+        setResult(res);
+        if (resultRef.current) {
+            resultRef.current?.setValue(res);
+        }
+    }
 
     return (
         <div>
@@ -61,7 +71,9 @@ export default function CalculusField(props: CalculusFieldProps) {
             </select>
             <input onChange={handleVariableChange} className={styles.varMenu} size={1} placeholder={'x'}/>
             <math-field onChange={handleMathFieldChange} style={mathFieldStyle} ref={ref}>{props.value}</math-field>
-            <button onClick={() => compute(menu, variable, mathFieldValue)} className={styles.runBtn}>{menu.slice(0,1)}</button>
+            <button onClick={showResult} className={styles.runBtn}>{menu.slice(0,1)}</button>
+            <br></br>
+            <math-field style={mathFieldStyle} ref={resultRef}></math-field>
         </div>
     );
 }
