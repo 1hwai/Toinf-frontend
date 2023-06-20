@@ -20,10 +20,10 @@ export default function CalculusField(props: CalculusFieldProps) {
     const ref = useRef<MathfieldElement>();
     const resultRef = useRef<MathfieldElement>();
 
-    const [mathFieldValue, setMathFieldValue] = useState<string>('');
+    const [mathFieldValue, setMathFieldValue] = useState<string>('0');
     const [menu, setMenu] = useState<string>(Menu.DERIVATIVE);
-    const [variable, setVariable] = useState<string>('');
-    const [result, setResult] = useState<string>('');
+    const [variable, setVariable] = useState<string>('x');
+    const [result, setResult] = useState<string>();
 
     const mathFieldStyle = {
         margin: "32px",
@@ -70,7 +70,8 @@ export default function CalculusField(props: CalculusFieldProps) {
                 <option value={Menu.SERIES}>∑</option>
             </select>
             <input onChange={handleVariableChange} className={styles.varMenu} size={1} placeholder={'x'}/>
-            <math-field onChange={handleMathFieldChange} style={mathFieldStyle} ref={ref}>{props.value}</math-field>
+            <math-field style={mathFieldStyle} ref={ref}></math-field>
+            <input onChange={handleMathFieldChange} style={mathFieldStyle}></input>
             <button onClick={showResult} className={styles.runBtn}>{menu.slice(0,1)}</button>
             <br></br>
             <math-field style={mathFieldStyle} ref={resultRef}></math-field>

@@ -5,18 +5,19 @@ type resultType = {
 }
 
 export default async function compute(menu: string, variable: string, latex: string): Promise<string> {
+    console.log('before posting: latex: ' + latex);
     const result: resultType =
         await axios.post(
             "http://localhost:8000/derivative",
             {
                 'menu': menu,
                 'variable': variable,
-                'latex': '$$ e^{x} $$',
+                'latex': latex,
             }
         );
     return result.data.result.latex;
     /**
      * $$ e^{x} $$
-     *
+     * $$ \sin\left(x\right) $$
      */
 }
