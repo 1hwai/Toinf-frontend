@@ -11,16 +11,15 @@ export type CalculusFieldProps = {
 };
 
 export enum Menu {
-    DERIVATIVE = 'Derivative',
-    INTEGRAL = 'Integral',
-    SERIES = 'Series'
+    DERIVATIVE = 'derivative',
+    INTEGRAL = 'integral',
+    SERIES = 'series'
 }
 
 export default function CalculusField(props: CalculusFieldProps) {
     const ref = useRef<MathfieldElement>();
     const resultRef = useRef<MathfieldElement>();
 
-    const [mathFieldValue, setMathFieldValue] = useState<string>('0');
     const [menu, setMenu] = useState<string>(Menu.DERIVATIVE);
     const [variable, setVariable] = useState<string>('x');
     const [result, setResult] = useState<string>();
@@ -38,11 +37,6 @@ export default function CalculusField(props: CalculusFieldProps) {
         boxShadow: "0 1em 2em 1em #afafaf",
     }
 
-    const handleMathFieldChange = (e) => {
-        console.log(e.target.value);
-        setMathFieldValue(e.target.value);
-    };
-
     const handleVariableChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.value);
         setVariable(e.target.value);
@@ -54,7 +48,7 @@ export default function CalculusField(props: CalculusFieldProps) {
     }
 
     const showResult = async () => {
-        const res: string = await compute(menu, variable, mathFieldValue);
+        const res: string = await compute(menu, variable, ref.current?.value!);
         console.log(res);
         setResult(res);
         if (resultRef.current) {
@@ -71,7 +65,6 @@ export default function CalculusField(props: CalculusFieldProps) {
             </select>
             <input onChange={handleVariableChange} className={styles.varMenu} size={1} placeholder={'x'}/>
             <math-field style={mathFieldStyle} ref={ref}></math-field>
-            <input onChange={handleMathFieldChange} style={mathFieldStyle}></input>
             <button onClick={showResult} className={styles.runBtn}>{menu.slice(0,1)}</button>
             <br></br>
             <math-field style={mathFieldStyle} ref={resultRef}></math-field>

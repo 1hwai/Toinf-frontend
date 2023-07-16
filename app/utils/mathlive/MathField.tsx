@@ -1,6 +1,7 @@
 import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import { MathfieldElement, MathfieldOptions } from "mathlive";
 import styles from "@/app/styles/functionList.module.scss";
+import runField from "@/app/api/functionList/runField";
 
 export type MathFieldProps = {
     options?: Partial<MathfieldOptions>;
@@ -31,10 +32,16 @@ export default function MathField(props: MathFieldProps) {
         setInputValue(e.target.value);
     };
 
+    const run = () => {
+        const latex = ref.current?.value!;
+        console.log(latex);
+        runField(props.id, latex);
+    }
+
     return (
         <div>
             <math-field onChange={handleInputChange} style={mathFieldStyle} ref={ref}>{props.value}</math-field>
-            <button className={styles.runBtn}>*</button>
+            <button onClick={run} className={styles.runBtn}>*</button>
         </div>
     );
 }

@@ -52,7 +52,7 @@ export default class ScreenManager implements GraphPrinter {
             ev.preventDefault();
             this.clear();
             if (ev.deltaY < 0) {
-                this.ratio -= ev.deltaY/50;
+                this.ratio -= ev.deltaY*this.ratio/400;
             } else {
                 this.ratio /= ev.deltaY/80;
             }

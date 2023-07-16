@@ -5,10 +5,11 @@ type resultType = {
 }
 
 export default async function compute(menu: string, variable: string, latex: string): Promise<string> {
+    latex = `$$ ${latex} $$`;
     console.log('before posting: latex: ' + latex);
     const result: resultType =
         await axios.post(
-            "http://localhost:8000/derivative",
+            `http://localhost:8000/${menu}`,
             {
                 'menu': menu,
                 'variable': variable,
